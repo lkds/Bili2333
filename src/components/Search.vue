@@ -14,6 +14,7 @@
             </el-input>
         </el-col>
     </el-row>
+    {{res}}
 </template>
 
 <script setup>
@@ -30,11 +31,12 @@ export default {
         return {
             keyword: '',
             select: '1',
+            res: ''
         }
     },
     methods: {
         process_input(){
-            if(this.select == '1'){
+            if(this.select == '1' & this.keyword.length > 0){
                 let prefix = this.keyword.split('?')[0]
                 const bv = prefix.split('/')[4]
                 this.keyword = bv
@@ -48,6 +50,7 @@ export default {
                 }
             }).then(res => {
                 console.log(res)
+                this.res = res.data
             }).catch(err => {
                 console.log(err)
             })
