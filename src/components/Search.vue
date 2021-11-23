@@ -5,8 +5,7 @@
                 <template #prepend>
                     <el-select v-model="select" placeholder="类别" style="width: 110px">
                         <el-option label="网址" value="1"></el-option>
-                        <el-option label="UP主" value="2"></el-option>
-                        <el-option label="关键词" value="3"></el-option>
+                        <el-option label="BV" value="2"></el-option>
                     </el-select>
                 </template>
                 <template #append>
@@ -34,14 +33,21 @@ export default {
         }
     },
     methods: {
+        process_input(){
+            if(this.select == '1'){
+                let prefix = this.keyword.split('?')[0]
+                const bv = prefix.split('/')[4]
+                this.keyword = bv
+            }
+        },
         search() {
-            axios.get('/api/search', {
+            this.process_input()
+            axios.get('/api/video_info', {
                 params: {
                     keyword: this.keyword,
-                    select: this.select,
                 }
             }).then(res => {
-                this.$emit('search', res.data)
+                console.log(res)
             }).catch(err => {
                 console.log(err)
             })
