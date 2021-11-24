@@ -31,7 +31,6 @@ import { Search } from '@element-plus/icons'
 </script>
 <script>
 import axios from '../network'
-import router from '../router'
 export default {
     name: 'Search',
     data() {
@@ -52,22 +51,21 @@ export default {
         },
         search() {
             this.process_input()
-            axios.get('/api/video_info', {
-                params: {
-                    keyword: this.keyword,
-                }
-            }).then(res => {
-                console.log(res)
-                this.res = res.data
-                this.url = res.data.pic
-            }).catch(err => {
-                console.log(err)
-            })
-            router.push({
-                path: '/result',
+            // axios.get('/api/video_info', {
+            //     params: {
+            //         keyword: this.keyword,
+            //     }
+            // }).then(res => {
+            //     console.log(res)
+            //     this.res = res.data
+            //     this.url = res.data.pic
+            // }).catch(err => {
+            //     console.log(err)
+            // })
+            this.$router.push({
+                path: '/intro',
                 query: {
-                    keyword: this.keyword,
-                    select: this.select
+                    keyword: this.keyword
                 }
             })
         }

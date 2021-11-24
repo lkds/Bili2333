@@ -6,19 +6,25 @@
       class="el-menu-vertical-demo"
       router
       >
-        <el-menu-item index="intro" ><el-icon><video-play /></el-icon>基本信息</el-menu-item>
-        <el-menu-item index="analysis" ><el-icon><postcard /></el-icon>总体分析</el-menu-item>
-        <el-menu-item index="point" ><el-icon><aim /></el-icon>内容定点</el-menu-item>
+        <el-menu-item index="#intro" ><el-icon><video-play /></el-icon>基本信息</el-menu-item>
+        <el-menu-item index="#analysis" ><el-icon><postcard /></el-icon>总体分析</el-menu-item>
+        <el-menu-item index="#point" ><el-icon><aim /></el-icon>内容定点</el-menu-item>
       </el-menu>
     </el-aside>
     <el-main>
-        <router-view></router-view>
+        <!-- <router-view></router-view> -->
+        <Intro id='intro'/>
+        <Analysis id='analysis'/>
+        <Point id='point'/>
     </el-main>
   </el-container>
 </template>
 
 <script>
 import { Message, Menu, Setting, VideoPlay, Postcard, Aim } from '@element-plus/icons'
+import Intro from './Intro.vue'
+import Analysis from './Analysis.vue'
+import Point from './Point.vue'
 export default {
     name: 'Result',
     components: {
@@ -27,7 +33,10 @@ export default {
         'icon-menu': Menu,
         VideoPlay,
         Postcard,
-        Aim
+        Aim,
+        Intro,
+        Analysis,
+        Point
     },
     methods: {
         handleClick(index) {
@@ -53,6 +62,7 @@ export default {
 
 .el-aside {
   color: var(--el-text-color-primary);
+  width: 200px;
 }
 
 .el-menu-vertical-demo:not(.el-menu--collapse) {

@@ -2,16 +2,18 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 
 const router = createRouter({
     history: createWebHashHistory(),
+    scrollBehavior(to, from, savedPosition) {
+        if (to.hash) {
+          return {
+            el: to.hash
+          }
+        }
+      },
     routes: [
         {
             path: '/',
             name: 'home',
             component: () => import('./components/Search.vue')
-        },
-        {
-            path: '/list',
-            name: 'list',
-            component: () => import('./components/VideoList.vue')
         },
         {
             path: '/result',
