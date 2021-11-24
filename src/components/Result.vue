@@ -14,7 +14,9 @@
     <el-main>
         <!-- <router-view></router-view> -->
         <Intro id='intro'/>
+        <el-divider></el-divider>
         <Analysis id='analysis'/>
+        <el-divider></el-divider>
         <Point id='point'/>
     </el-main>
   </el-container>
