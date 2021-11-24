@@ -1,6 +1,12 @@
 <template>
     <el-row justify="center" align="middle">
         <el-col :span=16 >
+            <el-image
+                class="icon"
+                :src="url"
+                fit="cover"
+            >
+            </el-image>
             <el-input v-model="keyword" placeholder="搜一搜">
                 <template #prepend>
                     <el-select v-model="select" placeholder="类别" style="width: 110px">
@@ -25,13 +31,15 @@ import { Search } from '@element-plus/icons'
 </script>
 <script>
 import axios from '../network'
+import router from '../router'
 export default {
     name: 'Search',
     data() {
         return {
             keyword: '',
             select: '1',
-            res: ''
+            res: '',
+            url: ''
         }
     },
     methods: {
@@ -51,12 +59,25 @@ export default {
             }).then(res => {
                 console.log(res)
                 this.res = res.data
+                this.url = res.data.pic
             }).catch(err => {
                 console.log(err)
+            })
+            router.push({
+                path: '/result',
+                query: {
+                    keyword: this.keyword,
+                    select: this.select
+                }
             })
         }
     }
 }
 </script>
 <style>
+.icon {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+}
 </style>
