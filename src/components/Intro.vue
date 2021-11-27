@@ -75,12 +75,19 @@ import axios from '../network'
 import { Coin, Pointer, VideoPlay, StarFilled, Comment, Calendar } from '@element-plus/icons'
 export default defineComponent({
     name: "Intro",
+    props: {
+        result: {
+            type: Object,
+            required: true
+        }
+    },
     components: {
         Coin, Pointer, VideoPlay, StarFilled, Comment, Calendar
     },
     mounted() {
-        this.get_videoinfos()
-        console.log(this.$route.query)
+        // this.get_videoinfos()
+        // console.log(this.$route.query)
+        this.render_result()
     },
     data() {
         return {
@@ -100,13 +107,7 @@ export default defineComponent({
         }
     },
     methods: {
-        get_videoinfos() {
-            axios.get('/video_info', {
-                params: {
-                    keyword: this.keyword,
-                }
-            }).then(videoinfos => {
-                console.log(videoinfos)
+        render_video_info(videoinfos) {
                 this.title = videoinfos.data['title'],
                     this.face_url = videoinfos.data['owner_face'],
                     this.up_name = videoinfos.data['owner_name'],
@@ -118,6 +119,28 @@ export default defineComponent({
                     this.favorite = videoinfos.data['favorite'],
                     this.coin = videoinfos.data['coin'],
                     this.num_danmu = videoinfos.data['danmaku']
+        },
+        render_result() {
+                this.title = this.result['title'],
+                this.face_url = this.result['owner_face'],
+                this.up_name = this.result['owner_name'],
+                this.description = this.result['desc'],
+                this.play_volume = this.result['view'],
+                this.cover_img = this.result['pic'],
+                this.time = new Date(parseInt(this.result['pubdate']) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ')
+            // this.like = videoinfos.data['like'],
+                //     this.favorite = videoinfos.data['favorite'],
+                //     this.coin = videoinfos.data['coin'],
+                //     this.num_danmu = videoinfos.data['danmaku']
+        },
+        get_videoinfos() {
+            axios.get('/video_info', {
+                params: {
+                    keyword: this.keyword,
+                }
+            }).then(videoinfos => {
+                console.log(videoinfos)
+                this.render_video_info(videoinfos)
             }).catch(err => {
                 console.log(err)
             })

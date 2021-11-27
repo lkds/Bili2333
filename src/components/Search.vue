@@ -63,7 +63,7 @@ export default {
             //     console.log(err)
             // })
             this.$router.push({
-                path: '/intro',
+                path: '/result',
                 query: {
                     keyword: this.keyword
                 }

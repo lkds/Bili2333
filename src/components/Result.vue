@@ -13,11 +13,11 @@
     </el-aside>
     <el-main>
         <!-- <router-view></router-view> -->
-        <Intro id='intro'/>
+        <Intro id='intro' :result="results"/>
         <el-divider></el-divider>
-        <Analysis id='analysis'/>
+        <Analysis id='analysis' :result="results"/>
         <el-divider></el-divider>
-        <Point id='point'/>
+        <Point id='point' :result="results"/>
     </el-main>
   </el-container>
 </template>
@@ -27,6 +27,7 @@ import { Message, Menu, Setting, VideoPlay, Postcard, Aim } from '@element-plus/
 import Intro from './Intro.vue'
 import Analysis from './Analysis.vue'
 import Point from './Point.vue'
+import axios from '../network'
 export default {
     name: 'Result',
     components: {
@@ -40,15 +41,32 @@ export default {
         Analysis,
         Point
     },
+    mounted() {
+        this.get_videoinfos(this.$route.query.keyword)
+        console.log(this.results)
+    },
     methods: {
         handleClick(index) {
             console.log(index);
+        },
+        get_videoinfos(bv) {
+            axios.get('/video_info', {
+                params: {
+                    keyword: bv,
+                }
+            }).then(videoinfos => {
+                console.log(videoinfos)
+                this.results = videoinfos['data']
+            }).catch(err => {
+                console.log(err)
+            })
         },
     },
     data() {
         return {
             activeIndex: '1',
             isCollapse: true,
+            results: {},
         }
     },
 
