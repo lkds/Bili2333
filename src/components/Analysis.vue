@@ -58,7 +58,7 @@ export default {
                     }
                 ]
             },
-            "word_cloud":"https://img2.baidu.com/it/u=3805475494,789599953&fm=26&fmt=auto"
+            "word_cloud":"https://img2.baidu.com/it/u=2259300882,354643197&fm=26&fmt=auto"
         }
     },
     methods: {

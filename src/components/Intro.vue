@@ -12,36 +12,24 @@
             </div>
         </el-col>
         <el-col :span="8">
-            <div class="info-card">
-                <el-collapse v-model="activeNames" @change="handleChange">
-                    <el-collapse-item title="UP" name="1">
-                        <div>
-                            <el-avatar :size="50" :src="face_url"></el-avatar>
-                        </div>
-                        <div class="text">{{ up_name }}</div>
-                    </el-collapse-item>
-                    <el-collapse-item title="视频简介" name="2">
-                        <div class="text">{{ description }}</div>
-                    </el-collapse-item>
-                    <el-collapse-item title="播放量" name="3">
-                        <div class="text">{{ play_volume }}</div>
-                    </el-collapse-item>
-                    <el-collapse-item title="弹幕数" name="4">
-                        <div class="text">{{ num_danmu }}</div>
-                    </el-collapse-item>
-                    <el-collapse-item title="投稿时间" name="5">
-                        <div class="text">{{ time }}</div>
-                    </el-collapse-item>
-                    <el-collapse-item title="一键三连" name="6">
-                        <div>
-                            <el-image :src="fcl_img" style=" width: 100%;" fit=""></el-image>
-                        </div>
-                        <el-col class="el-col">{{ like }}</el-col>
-                        <el-col class="el-col">{{ coin }}</el-col>
-                        <el-col class="el-col">{{ favorite }}</el-col>
-                    </el-collapse-item>
-                </el-collapse>
-            </div>
+            <el-descriptions
+    	        title="视频信息"
+    	        :column="1"
+                border
+            >
+    	        <el-descriptions-item label="UP" label-align="center">
+                    <el-col><el-avatar :size="50" :src="face_url"></el-avatar></el-col>
+                    <el-col class="text" style="transform: translateY(50%)">{{ up_name }}</el-col></el-descriptions-item>
+    	        <el-descriptions-item label="视频简介" label-align="center" width="0px"><el-col class="text">{{ description }}</el-col></el-descriptions-item>
+    	        <el-descriptions-item label="播放量" label-align="center"><el-col><el-icon size='25px'><video-play /></el-icon></el-col><el-col class="text"> {{ play_volume }} </el-col></el-descriptions-item>
+    	        <el-descriptions-item label="弹幕数" label-align="center"><el-col><el-icon size='25px'><comment /></el-icon></el-col><el-col class="text"> {{ num_danmu }} </el-col></el-descriptions-item>
+    	        <el-descriptions-item label="投稿时间" label-align="center"><el-col><el-icon size='25px'><calendar /></el-icon></el-col><el-col class="text"> {{ time }} </el-col></el-descriptions-item>
+    	        <el-descriptions-item label="一键三连" label-align="center">
+    	            <el-col><el-icon size='25px'><pointer /></el-icon></el-col><el-col class="text" > {{ favorite }} </el-col>
+    	            <el-col><el-icon size='25px'><coin /></el-icon></el-col><el-col class="text" > {{ coin }} </el-col>
+	                <el-col><el-icon size='25px'><star-filled /></el-icon></el-col><el-col class="text" > {{ favorite }} </el-col>
+    	        </el-descriptions-item>
+            </el-descriptions>
         </el-col>
     </el-row>
 </template>
@@ -52,35 +40,29 @@
     display: flex;
     flex-wrap: wrap;
 }
-
 /* .info-card {
     width: 480px;
     margin-left: 200px;
 } */
-
 .el-title-row {
     margin-top: 25px;
     margin-bottom: 25px;
     display: flex;
     flex-wrap: wrap;
 }
-
 .el-title-col {
     margin-left: 50px;
     display: flex;
     flex-wrap: wrap;
 }
-
 /* .el-cover { */
     /* margin-left: 100px; */
     /* display: flex;
     flex-wrap: wrap; */
 /* } */
-
 .text {
     font-size: 18px;
 }
-
 .el-col {
     margin-left: 11px;
 }
@@ -90,24 +72,16 @@
 <script lang="ts">
 import { ref, defineComponent } from "vue"
 import axios from '../network'
+import { Coin, Pointer, VideoPlay, StarFilled, Comment, Calendar } from '@element-plus/icons'
 export default defineComponent({
     name: "Intro",
-    setup() {
-        const activeNames = ref(['1'])
-        const handleChange = (val) => {
-            console.log(val)
-        }
-        return {
-            activeNames,
-            handleChange,
-        }
+    components: {
+        Coin, Pointer, VideoPlay, StarFilled, Comment, Calendar
     },
-
     mounted() {
         this.get_videoinfos()
         console.log(this.$route.query)
     },
-
     data() {
         return {
             // keyword: this.$route.query.keyword,
@@ -125,10 +99,9 @@ export default defineComponent({
             fcl_img: 'https://img1.baidu.com/it/u=1544353566,2990526187&fm=26&fmt=auto'
         }
     },
-
     methods: {
         get_videoinfos() {
-            axios.get('/api/video_info', {
+            axios.get('/video_info', {
                 params: {
                     keyword: this.keyword,
                 }

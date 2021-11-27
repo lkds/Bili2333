@@ -6,13 +6,13 @@
         ref="carousel"
         :interval="1000"
         type="card"
-        height="300px"
+        height="200px"
         style="margin-top:30px"
         :autoplay="false"
         @change="onChangeCarouselVal"
     >
         <el-carousel-item v-for="url in pics" :key="url">
-            <el-image :src="url" fit="contain"></el-image>
+            <el-image :src="url" fit="cover"></el-image>
         </el-carousel-item>
     </el-carousel>
     <div class="slider">
